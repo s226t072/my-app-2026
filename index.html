@@ -9,8 +9,20 @@
 </head>
 <body>
     <div class="container">
+        <!-- Naming Overlay -->
+        <div id="naming-overlay" class="overlay hidden">
+            <div class="modal">
+                <h2>わんこのなまえ</h2>
+                <p>なんてよぼうかな？</p>
+                <input type="text" id="dog-name-input" placeholder="なまえをいれてね" maxlength="10">
+                <button id="start-game-btn" class="btn-main">きまり！</button>
+            </div>
+        </div>
+
         <header>
-            <h1>ふわふわわんこ</h1>
+            <div class="dog-info-header">
+                <span id="display-dog-name" class="name-tag">わんこ</span>
+            </div>
             <div class="coin-display">
                 <span class="coin-icon">💰</span> <span id="coin-count">0</span>
             </div>
@@ -44,44 +56,49 @@
                 <button id="feed-btn" class="btn-main">ごはん</button>
                 <button id="play-btn" class="btn-main">あそぶ</button>
                 <button id="sleep-btn" class="btn-main">ねる</button>
-                <button id="shop-tab-btn" class="btn-sub">ショップ</button>
+                <button id="shop-tab-btn" class="btn-sub">ショップ & アイテム</button>
             </div>
         </div>
 
-        <!-- Shop View (Hidden by default) -->
+        <!-- Shop & Items View -->
         <div id="shop-view" class="sub-view hidden">
             <div class="view-header">
-                <h3>おみせ</h3>
+                <h3>おみせ & もちもの</h3>
                 <button id="close-shop-btn" class="btn-close">×</button>
             </div>
-            <div class="shop-items">
-                <div class="shop-item">
-                    <div class="item-info"><span>🍖</span> 高級な肉 (50枚)</div>
-                    <button class="buy-btn" data-item="premium_food" data-price="50">かう</button>
+            <div class="shop-content">
+                <div class="shop-section">
+                    <h4>ショップ</h4>
+                    <div class="shop-items">
+                        <div class="shop-item">
+                            <div class="item-info"><span>🍖</span> 高級な肉 (50枚)</div>
+                            <button class="buy-btn" data-item="premium_food" data-price="50">かう</button>
+                        </div>
+                        <div class="shop-item">
+                            <div class="item-info"><span>🍰</span> おやつ (30枚)</div>
+                            <button class="buy-btn" data-item="treat" data-price="30">かう</button>
+                        </div>
+                        <div class="shop-item">
+                            <div class="item-info"><span>🎀</span> リボン (100枚)</div>
+                            <button class="buy-btn" data-item="ribbon" data-price="100">かう</button>
+                        </div>
+                        <div class="shop-item">
+                            <div class="item-info"><span>🎩</span> ぼうし (150枚)</div>
+                            <button class="buy-btn" data-item="hat" data-price="150">かう</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="shop-item">
-                    <div class="item-info"><span>🍰</span> おやつ (30枚)</div>
-                    <button class="buy-btn" data-item="treat" data-price="30">かう</button>
+                <div class="inventory-section">
+                    <h4>もちもの</h4>
+                    <div id="inventory-list" class="inventory-list"></div>
                 </div>
-                <div class="shop-item">
-                    <div class="item-info"><span>🎀</span> リボン (100枚)</div>
-                    <button class="buy-btn" data-item="ribbon" data-price="100">かう</button>
-                </div>
-                <div class="shop-item">
-                    <div class="item-info"><span>🎩</span> ぼうし (150枚)</div>
-                    <button class="buy-btn" data-item="hat" data-price="150">かう</button>
-                </div>
-            </div>
-            <div class="inventory">
-                <h4>もちもの</h4>
-                <div id="inventory-list" class="inventory-list"></div>
             </div>
         </div>
 
         <div class="log-container">
             <h3>おもいでログ</h3>
             <ul id="log-list"></ul>
-            <button id="reset-btn" class="btn-reset">リセット</button>
+            <button id="reset-btn" class="btn-reset">最初からやりなおす</button>
         </div>
     </div>
     <script src="script.js"></script>

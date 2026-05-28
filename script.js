@@ -1,5 +1,6 @@
 // 状態の初期化
 const initialState = {
+    dogName: "",
     hunger: 50,
     happiness: 50,
     energy: 100,
@@ -9,7 +10,8 @@ const initialState = {
     logs: []
 };
 
-let state = JSON.parse(localStorage.getItem('dogAppStateCute')) || initialState;
+// ローカルストレージから読み込み
+let state = JSON.parse(localStorage.getItem('dogAppStateFinal')) || initialState;
 
 // アイテムデータ
 const items = {
@@ -30,6 +32,9 @@ const messageBubble = document.getElementById('message');
 const logList = document.getElementById('log-list');
 const shopView = document.getElementById('shop-view');
 const inventoryList = document.getElementById('inventory-list');
+const displayDogName = document.getElementById('display-dog-name');
+const namingOverlay = document.getElementById('naming-overlay');
+const dogNameInput = document.getElementById('dog-name-input');
 
 // UIの更新
 function updateUI() {
@@ -37,6 +42,7 @@ function updateUI() {
     happinessBar.style.width = `${state.happiness}%`;
     energyBar.style.width = `${state.energy}%`;
     coinCount.textContent = state.coins;
+    displayDogName.textContent = state.dogName || "わんこ";
 
     // アクセサリーの表示
     if (state.equipped) {
@@ -87,7 +93,7 @@ function updateInventory() {
 
 // 状態の保存
 function saveState() {
-    localStorage.setItem('dogAppStateCute', JSON.stringify(state));
+    localStorage.setItem('dogAppStateFinal', JSON.stringify(state));
 }
 
 // ログの追加
@@ -95,7 +101,7 @@ function addLog(text) {
     const now = new Date();
     const timeStr = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
     state.logs.push(`[${timeStr}] ${text}`);
-    if (state.logs.length > 10) state.logs.shift();
+    if (state.logs.length > 20) state.logs.shift(); // ログを多めに保存
     saveState();
     updateUI();
 }
@@ -107,7 +113,7 @@ function feed() {
         return;
     }
     state.hunger = Math.min(100, state.hunger + 15);
-    addLog("ごはんをたべた！");
+    addLog(`${state.dogName}は ごはんを たべた！`);
     animateDog();
 }
 
@@ -123,14 +129,14 @@ function play() {
     const reward = 10 + Math.floor(Math.random() * 6);
     state.coins += reward;
     
-    addLog(`あそんで ${reward}コイン ゲット！`);
+    addLog(`${state.dogName}と あそんで ${reward}コイン ゲット！`);
     animateDog();
 }
 
 function sleep() {
     state.energy = 100;
     state.hunger = Math.max(0, state.hunger - 10);
-    addLog("ぐっすりねたワン。");
+    addLog(`${state.dogName}は ぐっすり ねむった。`);
     dogEmoji.textContent = "💤";
     setTimeout(updateUI, 2000);
 }
@@ -154,7 +160,7 @@ function buyItem(itemId, price) {
     if (item.type === "accessory") {
         if (!state.inventory.includes(itemId)) {
             state.inventory.push(itemId);
-            addLog(`${item.name}をかったよ！`);
+            addLog(`${item.name}を かったよ！`);
         } else {
             alert("もうもってるよ！");
             state.coins += price; // 返金
@@ -163,7 +169,7 @@ function buyItem(itemId, price) {
         // 即時使用アイテム
         if (item.effect === "hunger") state.hunger = Math.min(100, state.hunger + item.value);
         if (item.effect === "happiness") state.happiness = Math.min(100, state.happiness + item.value);
-        addLog(`${item.name}をつかった！`);
+        addLog(`${item.name}を つかった！`);
     }
     
     saveState();
@@ -180,14 +186,39 @@ function toggleAccessory(itemId) {
     updateUI();
 }
 
+// 名前設定
+function setDogName() {
+    const name = dogNameInput.value.trim();
+    if (!name) {
+        alert("なまえをいれてね！");
+        return;
+    }
+    state.dogName = name;
+    namingOverlay.classList.add('hidden');
+    addLog(`${state.dogName}との せいかつが はじまった！`);
+    saveState();
+    updateUI();
+}
+
+// 初期化チェック
+function init() {
+    if (!state.dogName) {
+        namingOverlay.classList.remove('hidden');
+    } else {
+        namingOverlay.classList.add('hidden');
+    }
+    updateUI();
+}
+
 // 自動減少
 setInterval(() => {
+    if (!state.dogName) return; // 名前が決まるまでは減らない
     state.hunger = Math.max(0, state.hunger - 1);
     state.happiness = Math.max(0, state.happiness - 1);
     state.energy = Math.max(0, state.energy - 1);
     saveState();
     updateUI();
-}, 15000);
+}, 20000);
 
 // イベントリスナー
 document.getElementById('feed-btn').addEventListener('click', feed);
@@ -195,6 +226,7 @@ document.getElementById('play-btn').addEventListener('click', play);
 document.getElementById('sleep-btn').addEventListener('click', sleep);
 document.getElementById('shop-tab-btn').addEventListener('click', () => shopView.classList.remove('hidden'));
 document.getElementById('close-shop-btn').addEventListener('click', () => shopView.classList.add('hidden'));
+document.getElementById('start-game-btn').addEventListener('click', setDogName);
 
 document.querySelectorAll('.buy-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -205,12 +237,13 @@ document.querySelectorAll('.buy-btn').forEach(btn => {
 });
 
 document.getElementById('reset-btn').addEventListener('click', () => {
-    if (confirm('ぜんぶリセットする？')) {
+    if (confirm('ぜんぶリセットして最初からやりなおす？')) {
+        localStorage.removeItem('dogAppStateFinal');
         state = { ...initialState, inventory: [], logs: [] };
         saveState();
-        updateUI();
+        location.reload();
     }
 });
 
-// 初期表示
-updateUI();
+// 開始
+init();

@@ -18,31 +18,39 @@ body {
     min-height: 100vh;
     margin: 0;
     color: var(--text-color);
+    overflow: hidden;
 }
 
 .container {
     background: white;
-    padding: 1.5rem;
+    padding: 1.2rem;
     border-radius: 30px;
     box-shadow: 0 10px 30px rgba(255, 182, 193, 0.4);
     width: 90%;
     max-width: 380px;
+    height: 600px;
     text-align: center;
     border: 6px solid var(--primary-pink);
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
 }
 
-h1 {
-    font-size: 1.4rem;
-    margin: 0;
-    color: var(--dark-pink);
+.name-tag {
+    background: var(--primary-pink);
+    color: white;
+    padding: 4px 15px;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: 0 3px 0 #ff9ec7;
 }
 
 .coin-display {
@@ -51,15 +59,16 @@ h1 {
     border-radius: 20px;
     font-weight: bold;
     border: 2px solid #ffe066;
+    font-size: 0.9rem;
 }
 
 .dog-display {
-    height: 180px;
+    height: 160px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
     background: var(--soft-blue);
     border-radius: 20px;
     position: relative;
@@ -71,7 +80,7 @@ h1 {
 }
 
 .dog-emoji {
-    font-size: 90px;
+    font-size: 85px;
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 1;
 }
@@ -87,13 +96,14 @@ h1 {
 
 .message-bubble {
     background: white;
-    padding: 8px 15px;
+    padding: 6px 12px;
     border-radius: 15px;
-    font-size: 0.85rem;
-    margin-top: 10px;
+    font-size: 0.8rem;
+    margin-top: 8px;
     color: var(--text-color);
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     position: relative;
+    max-width: 80%;
 }
 
 .message-bubble::after {
@@ -108,7 +118,7 @@ h1 {
 }
 
 .status-container {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     background: #fffafa;
     padding: 10px;
     border-radius: 15px;
@@ -117,18 +127,18 @@ h1 {
 .status-item {
     display: flex;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .status-icon {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin-right: 10px;
     width: 25px;
 }
 
 .progress-bar {
     flex-grow: 1;
-    height: 12px;
+    height: 10px;
     background: #ffebee;
     border-radius: 10px;
     overflow: hidden;
@@ -145,7 +155,7 @@ h1 {
 .actions {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 8px;
 }
 
 button {
@@ -158,7 +168,7 @@ button {
 }
 
 .btn-main {
-    padding: 12px 5px;
+    padding: 10px 5px;
     background: var(--primary-pink);
     color: white;
     box-shadow: 0 4px 0 #ff9ec7;
@@ -180,10 +190,48 @@ button {
     background: var(--soft-blue);
     color: #448aff;
     margin-top: 5px;
+    font-size: 0.9rem;
 }
 
-.hidden { display: none; }
+/* Overlay & Modal */
+.overlay {
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    width: calc(100% + 12px);
+    height: calc(100% + 12px);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+}
 
+.modal {
+    background: white;
+    padding: 2rem;
+    border-radius: 25px;
+    border: 4px solid var(--primary-pink);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 80%;
+}
+
+.modal h2 { color: var(--dark-pink); margin-top: 0; }
+.modal input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 15px;
+    border: 2px solid var(--soft-blue);
+    margin: 15px 0;
+    text-align: center;
+    font-size: 1.1rem;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+/* Sub View (Shop/Items) */
 .sub-view {
     position: absolute;
     top: 0;
@@ -192,18 +240,73 @@ button {
     height: 100%;
     background: white;
     border-radius: 24px;
-    z-index: 10;
-    padding: 20px;
+    z-index: 50;
+    padding: 15px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+}
+
+.shop-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    text-align: left;
+}
+
+.shop-section h4, .inventory-section h4 {
+    margin: 10px 0 5px 0;
+    font-size: 0.9rem;
+    color: var(--dark-pink);
+    border-bottom: 2px dotted var(--primary-pink);
+}
+
+.shop-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--soft-yellow);
+}
+
+.item-info { font-size: 0.85rem; }
+
+.buy-btn {
+    padding: 4px 12px;
+    background: var(--soft-yellow);
+    border: 2px solid #ffe066;
+    border-radius: 10px;
+    font-size: 0.8rem;
+}
+
+.inventory-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 0;
+}
+
+.inv-slot {
+    width: 45px;
+    height: 45px;
+    background: var(--soft-blue);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.4rem;
+}
+
+.inv-slot.active {
+    border: 3px solid var(--dark-pink);
+    background: var(--primary-pink);
 }
 
 .view-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .btn-close {
@@ -212,74 +315,38 @@ button {
     color: var(--dark-pink);
 }
 
-.shop-items {
-    flex-grow: 1;
-    overflow-y: auto;
-}
-
-.shop-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid var(--soft-yellow);
-}
-
-.buy-btn {
-    padding: 5px 15px;
-    background: var(--soft-yellow);
-    border: 2px solid #ffe066;
-    border-radius: 10px;
-}
-
-.inventory-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 10px;
-}
-
-.inv-slot {
-    width: 40px;
-    height: 40px;
-    background: var(--soft-blue);
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-size: 1.2rem;
-}
-
-.inv-slot.active {
-    border: 2px solid var(--dark-pink);
-    background: var(--primary-pink);
-}
-
 .log-container {
-    margin-top: 1.5rem;
+    flex-grow: 1;
+    margin-top: 1rem;
     text-align: left;
     border-top: 2px dashed var(--primary-pink);
-    padding-top: 10px;
+    padding-top: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
-.log-container h3 { font-size: 0.9rem; color: var(--dark-pink); margin: 0 0 5px 0; }
+.log-container h3 { font-size: 0.8rem; color: var(--dark-pink); margin: 0 0 5px 0; }
 
 #log-list {
     list-style: none;
     padding: 0;
-    font-size: 0.75rem;
-    max-height: 60px;
+    font-size: 0.7rem;
     overflow-y: auto;
+    flex-grow: 1;
 }
+
+#log-list li { margin-bottom: 2px; }
 
 .btn-reset {
     background: none;
     color: #ccc;
-    font-size: 0.7rem;
-    margin-top: 10px;
+    font-size: 0.65rem;
+    margin-top: 5px;
     width: 100%;
 }
+
+.hidden { display: none !important; }
 
 @keyframes bounce {
     0%, 100% { transform: scale(1); }
