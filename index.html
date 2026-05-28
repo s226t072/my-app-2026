@@ -12,16 +12,17 @@
         <!-- Naming Overlay -->
         <div id="naming-overlay" class="overlay hidden">
             <div class="modal">
-                <h2>わんこのなまえ</h2>
-                <p>なんてよぼうかな？</p>
-                <input type="text" id="dog-name-input" placeholder="なまえをいれてね" maxlength="10">
-                <button id="start-game-btn" class="btn-main">きまり！</button>
+                <h2>わんこをむかえよう！</h2>
+                <p>なんて おなまえに する？</p>
+                <input type="text" id="dog-name-input" placeholder="ここになまえをいれてね" maxlength="10">
+                <button id="start-game-btn" class="btn-main">いっしょにあそぶ！</button>
             </div>
         </div>
 
         <header>
             <div class="dog-info-header">
                 <span id="display-dog-name" class="name-tag">わんこ</span>
+                <button id="rename-btn" class="btn-icon">✏️</button>
             </div>
             <div class="coin-display">
                 <span class="coin-icon">💰</span> <span id="coin-count">0</span>
@@ -79,12 +80,24 @@
                             <button class="buy-btn" data-item="treat" data-price="30">かう</button>
                         </div>
                         <div class="shop-item">
+                            <div class="item-info"><span>🥛</span> ミルク (20枚)</div>
+                            <button class="buy-btn" data-item="milk" data-price="20">かう</button>
+                        </div>
+                        <div class="shop-item">
                             <div class="item-info"><span>🎀</span> リボン (100枚)</div>
                             <button class="buy-btn" data-item="ribbon" data-price="100">かう</button>
                         </div>
                         <div class="shop-item">
                             <div class="item-info"><span>🎩</span> ぼうし (150枚)</div>
                             <button class="buy-btn" data-item="hat" data-price="150">かう</button>
+                        </div>
+                        <div class="shop-item">
+                            <div class="item-info"><span>👑</span> かんむり (500枚)</div>
+                            <button class="buy-btn" data-item="crown" data-price="500">かう</button>
+                        </div>
+                        <div class="shop-item">
+                            <div class="item-info"><span>👓</span> めがね (200枚)</div>
+                            <button class="buy-btn" data-item="glasses" data-price="200">かう</button>
                         </div>
                     </div>
                 </div>

@@ -3,6 +3,7 @@
     --dark-pink: #ff85c0;
     --soft-yellow: #fff9db;
     --soft-blue: #e3f2fd;
+    --soft-green: #e8f5e9;
     --text-color: #5d4037;
     --bg-color: #fff5f8;
 }
@@ -10,30 +11,31 @@
 body {
     font-family: 'M PLUS Rounded 1c', sans-serif;
     background-color: var(--bg-color);
-    background-image: radial-gradient(#ffcad4 0.5px, transparent 0.5px);
-    background-size: 20px 20px;
+    background-image: 
+        radial-gradient(circle at 2px 2px, var(--primary-pink) 1px, transparent 0);
+    background-size: 24px 24px;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     margin: 0;
     color: var(--text-color);
-    overflow: hidden;
 }
 
 .container {
     background: white;
-    padding: 1.2rem;
-    border-radius: 30px;
-    box-shadow: 0 10px 30px rgba(255, 182, 193, 0.4);
+    padding: 1.5rem;
+    border-radius: 40px;
+    box-shadow: 0 15px 35px rgba(255, 182, 193, 0.4);
     width: 90%;
-    max-width: 380px;
-    height: 600px;
+    max-width: 400px;
+    height: 650px;
     text-align: center;
-    border: 6px solid var(--primary-pink);
+    border: 8px solid var(--primary-pink);
     position: relative;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
 }
 
 header {
@@ -51,6 +53,21 @@ header {
     font-weight: bold;
     font-size: 1rem;
     box-shadow: 0 3px 0 #ff9ec7;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 5px;
+    padding: 0;
+    line-height: 1;
+    transition: transform 0.2s;
+}
+
+.btn-icon:hover {
+    transform: scale(1.2);
 }
 
 .coin-display {
@@ -83,6 +100,17 @@ header {
     font-size: 85px;
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 1;
+    animation: breathe 3s ease-in-out infinite;
+}
+
+@keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
 }
 
 .accessory {
@@ -92,6 +120,7 @@ header {
     right: -10px;
     z-index: 2;
     pointer-events: none;
+    animation: float 2s ease-in-out infinite;
 }
 
 .message-bubble {
@@ -196,17 +225,17 @@ button {
 /* Overlay & Modal */
 .overlay {
     position: absolute;
-    top: -6px;
-    left: -6px;
-    width: calc(100% + 12px);
-    height: calc(100% + 12px);
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(5px);
+    top: -8px;
+    left: -8px;
+    width: calc(100% + 16px);
+    height: calc(100% + 16px);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
     z-index: 100;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 30px;
+    border-radius: 40px;
 }
 
 .modal {
