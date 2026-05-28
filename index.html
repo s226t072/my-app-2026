@@ -3,43 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>わんこ育成アプリ</title>
+    <title>ふわふわわんこ育成</title>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>わんこ育成アプリ</h1>
+        <header>
+            <h1>ふわふわわんこ</h1>
+            <div class="coin-display">
+                <span class="coin-icon">💰</span> <span id="coin-count">0</span>
+            </div>
+        </header>
         
-        <div class="dog-display">
-            <div id="dog" class="dog-emoji">🐶</div>
-            <div id="message" class="message-bubble">クーン...</div>
+        <div class="main-view">
+            <div class="dog-display">
+                <div class="dog-wrapper">
+                    <div id="accessory-slot" class="accessory"></div>
+                    <div id="dog" class="dog-emoji">🐶</div>
+                </div>
+                <div id="message" class="message-bubble">クーン...</div>
+            </div>
+
+            <div class="status-container">
+                <div class="status-item">
+                    <span class="status-icon">🍖</span>
+                    <div class="progress-bar"><div id="hunger-bar" class="progress-fill"></div></div>
+                </div>
+                <div class="status-item">
+                    <span class="status-icon">💖</span>
+                    <div class="progress-bar"><div id="happiness-bar" class="progress-fill"></div></div>
+                </div>
+                <div class="status-item">
+                    <span class="status-icon">⚡</span>
+                    <div class="progress-bar"><div id="energy-bar" class="progress-fill"></div></div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button id="feed-btn" class="btn-main">ごはん</button>
+                <button id="play-btn" class="btn-main">あそぶ</button>
+                <button id="sleep-btn" class="btn-main">ねる</button>
+                <button id="shop-tab-btn" class="btn-sub">ショップ</button>
+            </div>
         </div>
 
-        <div class="status-container">
-            <div class="status-item">
-                <label>おなか:</label>
-                <div class="progress-bar"><div id="hunger-bar" class="progress-fill"></div></div>
+        <!-- Shop View (Hidden by default) -->
+        <div id="shop-view" class="sub-view hidden">
+            <div class="view-header">
+                <h3>おみせ</h3>
+                <button id="close-shop-btn" class="btn-close">×</button>
             </div>
-            <div class="status-item">
-                <label>ごきげん:</label>
-                <div class="progress-bar"><div id="happiness-bar" class="progress-fill"></div></div>
+            <div class="shop-items">
+                <div class="shop-item">
+                    <div class="item-info"><span>🍖</span> 高級な肉 (50枚)</div>
+                    <button class="buy-btn" data-item="premium_food" data-price="50">かう</button>
+                </div>
+                <div class="shop-item">
+                    <div class="item-info"><span>🍰</span> おやつ (30枚)</div>
+                    <button class="buy-btn" data-item="treat" data-price="30">かう</button>
+                </div>
+                <div class="shop-item">
+                    <div class="item-info"><span>🎀</span> リボン (100枚)</div>
+                    <button class="buy-btn" data-item="ribbon" data-price="100">かう</button>
+                </div>
+                <div class="shop-item">
+                    <div class="item-info"><span>🎩</span> ぼうし (150枚)</div>
+                    <button class="buy-btn" data-item="hat" data-price="150">かう</button>
+                </div>
             </div>
-            <div class="status-item">
-                <label>たいりょく:</label>
-                <div class="progress-bar"><div id="energy-bar" class="progress-fill"></div></div>
+            <div class="inventory">
+                <h4>もちもの</h4>
+                <div id="inventory-list" class="inventory-list"></div>
             </div>
-        </div>
-
-        <div class="actions">
-            <button id="feed-btn">ごはんをあげる</button>
-            <button id="play-btn">あそぶ</button>
-            <button id="sleep-btn">ねかせる</button>
-            <button id="reset-btn" class="secondary">リセット</button>
         </div>
 
         <div class="log-container">
-            <h3>かつどうログ</h3>
+            <h3>おもいでログ</h3>
             <ul id="log-list"></ul>
+            <button id="reset-btn" class="btn-reset">リセット</button>
         </div>
     </div>
     <script src="script.js"></script>
